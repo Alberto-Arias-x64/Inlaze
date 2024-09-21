@@ -1,0 +1,20 @@
+{
+  "name": "inlaze",
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "test": "node --version",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "private": true,
+  "devDependencies": {
+    "husky": "^9.1.6"
+  }
+}
