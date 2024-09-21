@@ -3,6 +3,7 @@ import { type QueryFailedError, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "./users.entity";
 import type { UserDto } from "./users.dto";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UsersService {
@@ -13,7 +14,10 @@ export class UsersService {
 
   public async create(user: UserEntity): Promise<UserDto | HttpException> {
     try {
-      const userCreated = await this.usersRepository.save(user);
+      const userCreated = await this.usersRepository.save({
+        ...user,
+        password: await bcrypt.hash(user.password, 10),
+      });
       if (userCreated.id) {
         return {
           id: userCreated.id.toString(),
