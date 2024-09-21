@@ -1,6 +1,7 @@
 import { MoviesModule } from "./movies/movies.module";
+import { UserModule } from "./users/users.module";
+import { UserEntity } from "./users/users.entity";
 import { AppController } from "./app.controller";
-import { UserModule } from "./user/user.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { AppService } from "./app.service";
@@ -13,7 +14,7 @@ import { Module } from "@nestjs/common";
       database: "./db.sqlite",
       synchronize: true,
       logging: true,
-      entities: ["./src/app/models/*.ts"],
+      entities: [UserEntity],
     }),
     UserModule,
     AuthModule,

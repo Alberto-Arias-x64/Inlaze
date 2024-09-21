@@ -1,12 +1,19 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, HttpCode } from "@nestjs/common";
 import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
   public constructor(private readonly appService: AppService) {}
 
-  @Get()
-  public getHello(): string {
-    return this.appService.getHello();
+  @Get("not-found")
+  @HttpCode(404)
+  public notFound(): string {
+    return "Not found";
+  }
+
+  @Get("error")
+  @HttpCode(400)
+  public error(): string {
+    return "Error";
   }
 }
