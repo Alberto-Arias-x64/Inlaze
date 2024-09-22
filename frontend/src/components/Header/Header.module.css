@@ -21,12 +21,24 @@
   gap: 42px;
 }
 
-.user{
+.user {
   cursor: pointer;
 }
 
 .logo {
   width: 164px;
+}
+
+.logUser {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.logUser p {
+  color: var(--color-white);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

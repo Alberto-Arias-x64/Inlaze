@@ -1,8 +1,19 @@
-import { Controller, Get, type NotFoundException, Param, Query } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  type NotFoundException,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
 import { type DetailDto, MovieType, type MoviesListDto } from "./movies.dto";
 import type { GenresResponse } from "../core/utils/api-fetch";
 import { MoviesService } from "./movies.service";
 import { ApiTags } from "@nestjs/swagger";
+import { TokenGuard } from "../core/guards/token.guard";
 
 @ApiTags("Movies")
 @Controller("movies")
@@ -29,11 +40,6 @@ export class MoviesController {
     return this.moviesService.fetchMovies(MovieType.UPCOMING, page);
   }
 
-  @Get("favorites")
-  public favorites(@Query("page") page: number): Promise<MoviesListDto> {
-    return this.moviesService.fetchMovies(MovieType.UPCOMING, page);
-  }
-
   @Get("genres")
   public genres(): Promise<GenresResponse> {
     return this.moviesService.fetchGenres();
@@ -47,5 +53,16 @@ export class MoviesController {
   @Get("similar/:id")
   public similar(@Param("id") id: string): Promise<MoviesListDto> {
     return this.moviesService.fetchMovies(MovieType.SIMILAR, 1, id);
+  }
+
+  @Get("favorites")
+  public favorites(@Query("page") page: number): Promise<MoviesListDto> {
+    return this.moviesService.fetchMovies(MovieType.UPCOMING, page);
+  }
+
+  @Post("favorites")
+  @UseGuards(TokenGuard)
+  public addFavorite(@Body() body: { movieId: string }, @Req() request: Request): Promise<void> {
+    return this.moviesService.addFav(request["user"].id as string, body.movieId);
   }
 }

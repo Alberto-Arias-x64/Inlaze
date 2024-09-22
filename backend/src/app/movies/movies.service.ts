@@ -10,9 +10,10 @@ import {
   apiDetail,
   apiSimilar,
 } from "../core/utils/api-fetch";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { UserEntity } from "../users/users.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { MovieEntity } from "./movies.entity";
-import { Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -45,6 +46,8 @@ export class MoviesService {
   public constructor(
     @InjectRepository(MovieEntity)
     private readonly movieRepository: Repository<MovieEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
   public async fetchMovies(
     movieType: MovieType,
@@ -103,5 +106,18 @@ export class MoviesService {
       vote_average: movie.vote_average,
       related_movies: [],
     };
+  }
+
+  public async addFav(userId: string, movieId: string): Promise<void> {
+    const user = await this.userRepository.findOne({
+      relations: { movies: true },
+      where: { id: Number(userId) },
+    });
+    if (!user) throw new NotFoundException("User not found");
+    const movie = await this.movieRepository.findOneBy({ id: movieId });
+    if (!movie) throw new NotFoundException("Movie not found");
+    await this.movieRepository.update(movieId, { favorites: movie.favorites + 1 });
+    user.movies = [...user.movies, movie];
+    await this.userRepository.manager.save(user);
   }
 }

@@ -33,7 +33,7 @@ export class DetailDto {
   public original_title: string;
   public overview: string;
   public poster_path: string;
-  public release_date: Date;
+  public release_date: string;
   public vote_average: number;
   public related_movies: MovieDto[];
 }

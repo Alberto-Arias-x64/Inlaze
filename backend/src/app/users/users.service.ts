@@ -4,6 +4,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "./users.entity";
 import type { UserDto } from "./users.dto";
 import * as bcrypt from "bcrypt";
+import { apiDetail } from "../core/utils/api-fetch";
+import type { MovieDto } from "../movies/movies.dto";
 
 @Injectable()
 export class UsersService {
@@ -48,12 +50,25 @@ export class UsersService {
   }
 
   public async findOne(id: number): Promise<UserDto | NotFoundException> {
-    const user = await this.usersRepository.findOneBy({ id });
+    const user = await this.usersRepository.findOne({ relations: { movies: true }, where: { id } });
     if (user && user.id) {
+      const moviesList: Promise<MovieDto>[] = user.movies.map(async ({ id }): Promise<MovieDto> => {
+        const detail = await apiDetail(id.toString());
+        return {
+          id: detail.id.toString(),
+          backdrop_path: detail.backdrop_path,
+          original_title: detail.original_title,
+          vote_average: detail.vote_average,
+          poster_path: detail.poster_path,
+          release_date: detail.release_date,
+          overview: detail.overview,
+          favorites: 0,
+        };
+      });
       return {
         id: user.id.toString(),
         email: user.email,
-        favoriteMovies: [],
+        favoriteMovies: await Promise.all(moviesList),
       };
     }
     throw new NotFoundException("User not found");

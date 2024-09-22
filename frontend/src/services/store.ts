@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface Store {
   user: string | null;
-  setUser: (token: string) => void;
+  setUser: (token: string | null) => void;
   loginModal: boolean;
   setLoginModal: (value: boolean) => void;
 }

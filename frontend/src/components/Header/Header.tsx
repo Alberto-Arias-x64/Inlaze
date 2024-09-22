@@ -12,9 +12,14 @@ export default function Header(): JSX.Element {
     if (typeof window !== "undefined") {
       const token = window.localStorage.getItem("token");
       if (token) setUser(token);
-      else setLoginModal(true);
     }
   }, [user]);
+
+  const logout = (): void => {
+    setUser(null);
+    window.localStorage.removeItem("token");
+    window.location.reload();
+  };
   return (
     <header className={module.header}>
       <div className={module.content}>
@@ -26,7 +31,14 @@ export default function Header(): JSX.Element {
           <Link href={"/favorites"}>Favorites</Link>
         </nav>
         {user ? (
-          <img src="/icon_user_loged.svg" alt="user" className={module.user} />
+          <div className={module.logUser}>
+            <img
+              src="/icon_user_loged.svg"
+              alt="user"
+              className={module.user}
+            />
+            <p onClick={() => logout()}>Log out</p>
+          </div>
         ) : (
           <img
             src="/icon_user.svg"
