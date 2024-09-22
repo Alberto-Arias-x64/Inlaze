@@ -1,9 +1,14 @@
-import RootLayout from "./layout";
+import Side from "@/components/SidePanel/Side";
+import Hero from "@/components/Hero/Hero";
 
 export default function Home(): JSX.Element {
   return (
-    <RootLayout>
-      <h1>Welcome to the Inlaze Next.js Starter!</h1>
-    </RootLayout>
+    <main>
+      <Hero />
+      <section>
+        <Side />
+        <div>Main content</div>
+      </section>
+    </main>
   );
 }

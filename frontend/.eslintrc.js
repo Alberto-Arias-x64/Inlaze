@@ -19,6 +19,7 @@ module.exports = {
   },
   ignorePatterns: [".eslintrc.js", "global.d.ts", "jest.base.config.ts"],
   rules: {
+    "linebreak-style": ["error", "windows"],
     "unused-imports/no-unused-imports": "error",
     "no-duplicate-imports": "error",
     "@typescript-eslint/triple-slash-reference": "off",
@@ -92,7 +93,7 @@ module.exports = {
       "error",
       {
         selector: "default",
-        format: ["camelCase"],
+        format: ["camelCase", "PascalCase"],
       },
       {
         selector: "variable",

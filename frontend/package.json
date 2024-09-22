@@ -12,7 +12,7 @@
   "dependencies": {
     "@t3-oss/env-core": "^0.10.1",
     "lint-staged": "^15.2.7",
-    "next": "14.0.4",
+    "next": "^14.2.13",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.23.8"
@@ -30,5 +30,8 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.2.4",
     "typescript": "^5"
+  },
+  "prettier": {
+    "endOfLine": "crlf"
   }
 }

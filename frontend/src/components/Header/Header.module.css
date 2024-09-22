@@ -1,0 +1,38 @@
+.header {
+  background-color: var(--color-black);
+  padding: 13px 60px;
+}
+
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+}
+
+.header nav a {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  align-items: center;
+  gap: 42px;
+}
+
+.logo {
+  width: 164px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    width: 100px;
+  }
+  .header nav {
+    gap: 30px;
+  }
+  .content {
+    gap: 30px;
+  }
+}
