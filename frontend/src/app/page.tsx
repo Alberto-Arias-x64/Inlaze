@@ -1,13 +1,16 @@
 import Side from "@/components/SidePanel/Side";
 import Hero from "@/components/Hero/Hero";
+import module from "./page.module.css";
 
 export default function Home(): JSX.Element {
   return (
     <main>
       <Hero />
-      <section>
+      <section className={module.mainLayout}>
         <Side />
-        <div>Main content</div>
+        <div>
+          <p>Main content</p>
+        </div>
       </section>
     </main>
   );

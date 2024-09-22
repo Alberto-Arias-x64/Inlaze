@@ -1,0 +1,62 @@
+.side {
+  background-color: var(--color-gray);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input label {
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+.input div {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-gray-dark);
+  padding: 12px;
+}
+
+.input div img {
+  position: absolute;
+  right: 16px;
+  top: 20%;
+  z-index: 1;
+}
+
+.input div input,
+.input div select {
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--color-white);
+  color: var(--color-white);
+  appearance: none;
+}
+
+.genresList {
+  background-color: var(--color-gray-dark);
+  height: 300px;
+  overflow: auto;
+}
+
+.genresList p {
+  padding: 5px 14px;
+  color: var(--color-white);
+  cursor: pointer;
+  width: 100%;
+}
+
+.genresList p:hover {
+  background-color: var(--color-gray-light);
+}

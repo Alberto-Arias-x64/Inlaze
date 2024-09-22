@@ -1,7 +1,8 @@
-import { Controller, Get, Query } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
-import { MoviesService } from "./movies.service";
+import type { GenresResponse } from "../core/utils/api-fetch";
 import { MovieType, type MoviesListDto } from "./movies.dto";
+import { Controller, Get, Query } from "@nestjs/common";
+import { MoviesService } from "./movies.service";
+import { ApiTags } from "@nestjs/swagger";
 
 @ApiTags("Movies")
 @Controller("movies")
@@ -31,5 +32,10 @@ export class MoviesController {
   @Get("favorites")
   public favorites(@Query("page") page: number): Promise<MoviesListDto> {
     return this.moviesService.fetchMovies(MovieType.UPCOMING, page);
+  }
+
+  @Get("genres")
+  public genres(): Promise<GenresResponse> {
+    return this.moviesService.fetchGenres();
   }
 }

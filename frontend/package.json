@@ -10,6 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@next/env": "^14.2.13",
     "@t3-oss/env-core": "^0.10.1",
     "lint-staged": "^15.2.7",
     "next": "^14.2.13",

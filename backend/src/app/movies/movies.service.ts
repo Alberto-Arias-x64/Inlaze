@@ -1,9 +1,11 @@
 import { type MovieDto, type MoviesListDto, MovieType } from "./movies.dto";
 import {
+  apiGenres,
   apiNowPlaying,
   apiPopular,
   apiTopRated,
   apiUpcoming,
+  type GenresResponse,
   type ApiResponse,
 } from "../core/utils/api-fetch";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -13,6 +15,10 @@ import { Repository } from "typeorm";
 
 @Injectable()
 export class MoviesService {
+  private genres: GenresResponse = {
+    genres: [],
+  };
+
   public constructor(
     @InjectRepository(MovieEntity)
     private readonly movieRepository: Repository<MovieEntity>,
@@ -48,5 +54,10 @@ export class MoviesService {
       results: await Promise.all(results),
     };
     return moviesList;
+  }
+
+  public async fetchGenres(): Promise<GenresResponse> {
+    if (!this.genres.genres.length) this.genres = await apiGenres();
+    return this.genres;
   }
 }
