@@ -28,7 +28,7 @@ export default async function Home(): Promise<JSX.Element> {
       <Hero
         title={detail.original_title}
         overview={detail.overview}
-        posterPath={detail.poster_path}
+        posterPath={detail.backdrop_path}
       />
       <section className={module.mainLayout}>
         <Side />

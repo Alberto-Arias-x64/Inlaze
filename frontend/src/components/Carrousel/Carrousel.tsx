@@ -41,7 +41,7 @@ export default async function Carrousel({
             favorites={false}
             image={
               "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" +
-              post.backdrop_path
+              post.poster_path
             }
             rating={post.vote_average}
             title={post.original_title}

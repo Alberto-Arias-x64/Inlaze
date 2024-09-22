@@ -1,6 +1,6 @@
-import Hero from "@/components/Hero/Hero";
 import module from "./page.module.css";
 import Carrousel from "@/components/Carrousel/Carrousel";
+import HeroDetail from "@/components/HeroDetail/HeroDetail";
 
 interface Genre {
   id: number;
@@ -32,10 +32,12 @@ export default async function Detail({
   const detail: DetailDto = await detailFetch.json();
   return (
     <main>
-      <Hero
+      <HeroDetail
         title={detail.original_title}
         overview={detail.overview}
         posterPath={detail.poster_path}
+        backdropPath={detail.backdrop_path}
+        genres={detail.genres}
       />
       <div className={module.mainContent}>
         <div>
