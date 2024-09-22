@@ -1,6 +1,8 @@
+import Link from "next/link";
 import module from "./Card.module.css";
 
 export interface CardProps {
+  id: string;
   title: string;
   date: string;
   image: string;
@@ -9,6 +11,7 @@ export interface CardProps {
 }
 
 export default function Card({
+  id,
   title,
   date,
   image,
@@ -17,7 +20,9 @@ export default function Card({
 }: CardProps): JSX.Element {
   return (
     <div className={module.card}>
-      <img src={image} alt="cover" />
+      <Link href={`/detail/${id}`}>
+        <img src={image} alt="cover" />
+      </Link>
       <div className={module.content}>
         <p className={module.title}>{title}</p>
         <p className={module.text}>{date}</p>

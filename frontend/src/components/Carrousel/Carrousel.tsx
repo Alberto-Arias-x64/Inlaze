@@ -36,6 +36,7 @@ export default async function Carrousel({
         {posts.results.map((post) => (
           <Card
             key={post.id}
+            id={post.id}
             date={post.release_date}
             favorites={false}
             image={

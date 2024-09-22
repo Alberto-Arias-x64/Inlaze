@@ -2,7 +2,15 @@ import Hero from "@/components/Hero/Hero";
 import module from "./page.module.css";
 import Carrousel from "@/components/Carrousel/Carrousel";
 
-export default function Detail(): JSX.Element {
+export async function generateStaticParams() {
+  return [];
+}
+
+export default function Detail({
+  params,
+}: {
+  params: { id: string };
+}): JSX.Element {
   return (
     <main>
       <Hero />
