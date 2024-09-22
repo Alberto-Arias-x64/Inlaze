@@ -1,4 +1,4 @@
-import { type MovieDto, type MoviesListDto, MovieType } from "./movies.dto";
+import { type DetailDto, type MovieDto, type MoviesListDto, MovieType } from "./movies.dto";
 import {
   apiGenres,
   apiNowPlaying,
@@ -7,10 +7,12 @@ import {
   apiUpcoming,
   type GenresResponse,
   type ApiResponse,
+  apiDetail,
+  apiSimilar,
 } from "../core/utils/api-fetch";
 import { InjectRepository } from "@nestjs/typeorm";
 import { MovieEntity } from "./movies.entity";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -44,7 +46,11 @@ export class MoviesService {
     @InjectRepository(MovieEntity)
     private readonly movieRepository: Repository<MovieEntity>,
   ) {}
-  public async fetchMovies(movieType: MovieType, page: number): Promise<MoviesListDto> {
+  public async fetchMovies(
+    movieType: MovieType,
+    page: number,
+    id?: string,
+  ): Promise<MoviesListDto> {
     let movies: ApiResponse = {
       results: [],
       page: 1,
@@ -56,6 +62,7 @@ export class MoviesService {
     if (movieType === MovieType.POPULAR) movies = await apiPopular(page);
     if (movieType === MovieType.TOP_RATED) movies = await apiTopRated(page);
     if (movieType === MovieType.UPCOMING) movies = await apiUpcoming(page);
+    if (movieType === MovieType.SIMILAR && id) movies = await apiSimilar(id, page);
     const results = movies.results.map(async (movie): Promise<MovieDto> => {
       const dbMovie = await this.movieRepository.findOneBy({ id: movie.id.toString() });
       if (!dbMovie) await this.movieRepository.save({ id: movie.id.toString(), favorites: 0 });
@@ -80,5 +87,21 @@ export class MoviesService {
   public async fetchGenres(): Promise<GenresResponse> {
     if (!this.genres.genres.length) this.genres = await apiGenres();
     return this.genres;
+  }
+
+  public async fetchMovie(id: string): Promise<DetailDto | NotFoundException> {
+    const movie = await apiDetail(id);
+    if (!movie.id) throw new NotFoundException("Movie not found");
+    return {
+      backdrop_path: movie.backdrop_path,
+      genres: movie.genres,
+      id: movie.id,
+      original_title: movie.original_title,
+      overview: movie.overview,
+      poster_path: movie.poster_path,
+      release_date: movie.release_date,
+      vote_average: movie.vote_average,
+      related_movies: [],
+    };
   }
 }

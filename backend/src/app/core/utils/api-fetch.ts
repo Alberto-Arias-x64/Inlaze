@@ -7,6 +7,7 @@ import { popularMock } from "../mocks/popular.mock";
 import { apiTopRatedMock } from "../mocks/top-rated.mock";
 import { upcomingMock } from "../mocks/upcoming.mock";
 
+// Movie responses
 export interface ApiResponse {
   dates: Dates;
   page: number;
@@ -37,12 +38,69 @@ export interface Result {
   vote_count: number;
 }
 
+// Genre responses
+
 export interface GenresResponse {
   genres: Genre[];
 }
 
 export interface Genre {
   id: number;
+  name: string;
+}
+
+// Detail responses
+export interface DetailResponse {
+  adult: boolean;
+  backdrop_path: string;
+  belongs_to_collection: BelongsToCollection;
+  budget: number;
+  genres: Genre[];
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  origin_country: string[];
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: ProductionCompany[];
+  production_countries: ProductionCountry[];
+  release_date: Date;
+  revenue: number;
+  runtime: number;
+  spoken_languages: SpokenLanguage[];
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface BelongsToCollection {
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+}
+
+export interface ProductionCompany {
+  id: number;
+  logo_path: null | string;
+  name: string;
+  origin_country: string;
+}
+
+export interface ProductionCountry {
+  iso_3166_1: string;
+  name: string;
+}
+
+export interface SpokenLanguage {
+  english_name: string;
+  iso_639_1: string;
   name: string;
 }
 
@@ -78,7 +136,15 @@ export function apiUpcoming(page: number): Promise<ApiResponse> {
   return apiFetch<ApiResponse>(`/movie/upcoming?language=en-US&page=${page}`);
 }
 
+export function apiSimilar(id: string, page: number): Promise<ApiResponse> {
+  return apiFetch<ApiResponse>(`/movie/${id}/similar?language=en-US&page=${page}`);
+}
+
 export function apiGenres(): Promise<GenresResponse> {
   if (USE_LOCAL_DATA) return Promise.resolve(genresMock);
   return apiFetch<GenresResponse>(`/genre/movie/list?language=en`);
+}
+
+export function apiDetail(id: string): Promise<DetailResponse> {
+  return apiFetch<DetailResponse>(`/movie/${id}?language=en-US`);
 }

@@ -3,10 +3,33 @@ import Side from "@/components/SidePanel/Side";
 import Hero from "@/components/Hero/Hero";
 import module from "./page.module.css";
 
-export default function Home(): JSX.Element {
+interface Genre {
+  id: number;
+  name: string;
+}
+interface DetailDto {
+  backdrop_path: string;
+  genres: Genre[];
+  id: number;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  release_date: Date;
+  vote_average: number;
+}
+
+export default async function Home(): Promise<JSX.Element> {
+  const detailFetch = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/movies/detail/${533535}`,
+  );
+  const detail: DetailDto = await detailFetch.json();
   return (
     <main>
-      <Hero />
+      <Hero
+        title={detail.original_title}
+        overview={detail.overview}
+        posterPath={detail.poster_path}
+      />
       <section className={module.mainLayout}>
         <Side />
         <div className={module.mainContent}>

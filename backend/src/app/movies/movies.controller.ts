@@ -1,6 +1,6 @@
+import { Controller, Get, type NotFoundException, Param, Query } from "@nestjs/common";
+import { type DetailDto, MovieType, type MoviesListDto } from "./movies.dto";
 import type { GenresResponse } from "../core/utils/api-fetch";
-import { MovieType, type MoviesListDto } from "./movies.dto";
-import { Controller, Get, Query } from "@nestjs/common";
 import { MoviesService } from "./movies.service";
 import { ApiTags } from "@nestjs/swagger";
 
@@ -37,5 +37,15 @@ export class MoviesController {
   @Get("genres")
   public genres(): Promise<GenresResponse> {
     return this.moviesService.fetchGenres();
+  }
+
+  @Get("detail/:id")
+  public detail(@Param("id") id: string): Promise<DetailDto | NotFoundException> {
+    return this.moviesService.fetchMovie(id);
+  }
+
+  @Get("similar/:id")
+  public similar(@Param("id") id: string): Promise<MoviesListDto> {
+    return this.moviesService.fetchMovies(MovieType.SIMILAR, 1, id);
   }
 }
