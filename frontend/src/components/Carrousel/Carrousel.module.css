@@ -1,0 +1,17 @@
+.carrousel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: max-content;
+}
+.title {
+  color: var(--color-white);
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.carrousel > div {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}

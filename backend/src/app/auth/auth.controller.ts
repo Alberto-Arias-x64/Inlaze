@@ -9,7 +9,7 @@ export class AuthController {
   public constructor(private readonly authService: AuthService) {}
 
   @Post("login")
-  public login(@Body() user: UserWhitPassDto): Promise<string | UnauthorizedException> {
+  public login(@Body() user: UserWhitPassDto): Promise<{ token: string } | UnauthorizedException> {
     return this.authService.login(user.email, user.password);
   }
 }

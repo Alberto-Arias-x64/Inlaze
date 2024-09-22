@@ -14,16 +14,21 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async login(email: string, password: string): Promise<string | UnauthorizedException> {
+  public async login(
+    email: string,
+    password: string,
+  ): Promise<{ token: string } | UnauthorizedException> {
     const user = await this.usersRepository.findOneBy({ email });
     if (user && user.isActive) {
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
         const payload = { id: user.id };
-        return this.jwtService.signAsync(payload, {
-          expiresIn: JWT_EXPIRES_IN,
-          secret: JWT_SECRET,
-        });
+        return {
+          token: await this.jwtService.signAsync(payload, {
+            expiresIn: JWT_EXPIRES_IN,
+            secret: JWT_SECRET,
+          }),
+        };
       } else throw new UnauthorizedException();
     }
     throw new UnauthorizedException();

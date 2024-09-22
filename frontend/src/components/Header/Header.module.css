@@ -21,6 +21,10 @@
   gap: 42px;
 }
 
+.user{
+  cursor: pointer;
+}
+
 .logo {
   width: 164px;
 }

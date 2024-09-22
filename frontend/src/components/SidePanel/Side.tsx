@@ -47,14 +47,14 @@ export default function Side(): JSX.Element {
             name="genres"
             id="genres"
             onFocus={() => setListState(true)}
-            onBlur={() => setTimeout(() => setListState(false), 10)}
+            onBlur={() => setTimeout(() => setListState(false), 100)}
             value={search}
             readOnly
           />
           <img src="/icon_chevron.svg" alt="genre" />
         </div>
         {listState && (
-          <div className={module.genresList}>
+          <div className={module.genresList + " appear"}>
             {genres.map((genre) => (
               <p key={genre.id} onClick={() => setSearch(genre.name)}>
                 {genre.name}

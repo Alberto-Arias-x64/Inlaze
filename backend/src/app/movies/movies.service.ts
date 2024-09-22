@@ -19,6 +19,27 @@ export class MoviesService {
     genres: [],
   };
 
+  private formatDate(date: string): string {
+    const mountList = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const [year, mount, day] = date.split("-");
+
+    return `${mountList[parseInt(mount, 10) - 1]} ${parseInt(day, 10)}, ${year}`;
+  }
+
   public constructor(
     @InjectRepository(MovieEntity)
     private readonly movieRepository: Repository<MovieEntity>,
@@ -42,9 +63,9 @@ export class MoviesService {
         id: movie.id.toString(),
         backdrop_path: movie.backdrop_path,
         original_title: movie.original_title,
-        vote_average: movie.vote_average,
+        vote_average: Math.floor(movie.vote_average * 10),
         poster_path: movie.poster_path,
-        release_date: movie.release_date,
+        release_date: this.formatDate(movie.release_date),
         overview: movie.overview,
         favorites: dbMovie?.favorites ?? 0,
       };
