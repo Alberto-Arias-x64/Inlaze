@@ -13,7 +13,9 @@ import {
 import { type UserDto, UserWhitPassDto } from "./users.dto";
 import { TokenGuard } from "../core/guards/token.guard";
 import { UsersService } from "./users.service";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Users")
 @Controller("users")
 export class UsersController {
   public constructor(private readonly usersService: UsersService) {}
@@ -33,7 +35,7 @@ export class UsersController {
   public createUser(
     @Body() { email, password }: UserWhitPassDto,
   ): Promise<UserDto | HttpException> {
-    return this.usersService.create({ email, password });
+    return this.usersService.create({ email, password, movies: [] });
   }
 
   @Delete()

@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { MovieEntity } from "../movies/movies.entity";
 
 @Entity()
 export class UserEntity {
@@ -14,9 +22,13 @@ export class UserEntity {
   @Column({ default: true })
   public isActive?: boolean;
 
-  @Column({ default: "CURRENT_TIMESTAMP" })
+  @CreateDateColumn()
   public createdAt?: Date;
 
-  @Column({ default: "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
+  @CreateDateColumn()
   public updatedAt?: Date;
+
+  @ManyToMany(() => MovieEntity)
+  @JoinTable()
+  public movies: MovieEntity[];
 }
