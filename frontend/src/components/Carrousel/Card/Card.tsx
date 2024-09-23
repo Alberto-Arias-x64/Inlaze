@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/naming-convention */
 "use client";
 import Link from "next/link";
 import module from "./Card.module.css";

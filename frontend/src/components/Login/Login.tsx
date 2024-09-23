@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 import { useState } from "react";
@@ -13,7 +14,7 @@ export default function Login(): JSX.Element {
 
   const setUserStore = useStore((state) => state.setUser);
 
-  const registerUser = (event: React.FormEvent<HTMLFormElement>) => {
+  const registerUser = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const { email, password, confirmPassword } = event.currentTarget;
     if (password.value !== confirmPassword.value)
@@ -34,7 +35,7 @@ export default function Login(): JSX.Element {
       });
   };
 
-  const loginUser = (event: React.FormEvent<HTMLFormElement>) => {
+  const loginUser = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const { email, password } = event.currentTarget;
     fetch(process.env.NEXT_PUBLIC_API_URL + "/auth/login", {
@@ -49,9 +50,9 @@ export default function Login(): JSX.Element {
         if (data.statusCode === 400) alert("error logging in");
         else {
           if (typeof window !== "undefined") {
-            window.localStorage.setItem("token", data.token);
+            window.localStorage.setItem("token", data.token as string);
             alert("User logged in successfully");
-            setUserStore(data.token);
+            setUserStore(data.token as string);
             setLoginModal(false);
           }
         }
