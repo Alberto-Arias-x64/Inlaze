@@ -45,9 +45,6 @@ export default async function Home(): Promise<JSX.Element> {
           <div>
             <Carrousel title="Top Rated" url="/movies/top-rated" />
           </div>
-          <div>
-            <Carrousel title="Favorites" url="/movies/favorites" />
-          </div>
         </div>
       </section>
     </main>

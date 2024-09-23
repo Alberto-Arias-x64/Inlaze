@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import module from "./Card.module.css";
 
@@ -18,6 +19,16 @@ export default function Card({
   rating,
   favorites,
 }: CardProps): JSX.Element {
+  const sendFav = (): void => {
+    fetch(process.env.NEXT_PUBLIC_API_URL + "/movies/favorites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ movieId: id }),
+    });
+  };
   return (
     <div className={module.card}>
       <Link href={`/detail/${id}`}>
@@ -33,7 +44,7 @@ export default function Card({
           </div>
           <div>
             <p className={module.text}>Favorites</p>
-            <img src="/icon_heart.svg" alt="heart" />
+            <img src="/icon_heart.svg" alt="heart" onClick={() => sendFav()} />
           </div>
         </div>
       </div>

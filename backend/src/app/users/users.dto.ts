@@ -1,5 +1,4 @@
 import { IsEmail, IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
-import type { MovieEntity } from "../movies/movies.entity";
 import type { MovieDto } from "../movies/movies.dto";
 
 export class UserDto {

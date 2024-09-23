@@ -1,0 +1,37 @@
+.mainContent {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: var(--color-gray-light);
+}
+
+.mainContent span {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.mainContent span h1 {
+  color: var(--color-white);
+  margin: 0;
+}
+
+.mainContent span p {
+  color: var(--color-white);
+  font-size: 16px;
+}
+
+.mainContent strong {
+  color: var(--color-white);
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.favs {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
