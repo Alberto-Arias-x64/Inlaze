@@ -19,6 +19,7 @@ module.exports = {
   },
   ignorePatterns: [".eslintrc.js", "global.d.ts", "jest.base.config.ts"],
   rules: {
+    "prettier/prettier": "off",
     "linebreak-style": "off",
     "unused-imports/no-unused-imports": "error",
     "no-duplicate-imports": "error",
