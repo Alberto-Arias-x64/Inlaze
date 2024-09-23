@@ -34,6 +34,6 @@
     "typescript": "^5"
   },
   "prettier": {
-    "endOfLine": "crlf"
+    "endOfLine": "LF"
   }
 }
